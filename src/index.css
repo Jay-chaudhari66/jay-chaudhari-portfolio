@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+:root {
+  --color-background: #05050a;
+  --color-surface: #0d0d14;
+
+  --color-primary: #f2f2fa;
+  --color-secondary: #9a9ab0;
+
+  --color-accent: #00f0ff;
+  --color-accent-light: #5ef5ff;
+  --color-accent-magenta: #ff2e92;
+
+  --font-heading: "Chakra Petch", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-primary);
+  font-family: var(--font-body);
+  position: relative;
+}
+
+/* Perspective grid, fixed behind all content */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(0, 240, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 240, 255, 0.05) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 80% 55% at 50% 20%, black 20%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 55% at 50% 20%, black 20%, transparent 70%);
+}
+
+/* CRT scanline texture, fixed above everything */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.012) 0px,
+    rgba(255, 255, 255, 0.012) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  opacity: 0.5;
+}
+
+#root {
+  position: relative;
+  z-index: 1;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+}
+
+::selection {
+  background: rgba(0, 240, 255, 0.25);
+  color: #ffffff;
+}
+
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #05050a; }
+::-webkit-scrollbar-thumb { background: #1c1c28; border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: #00f0ff44; }
+
+/* Glitch text effect, applied via className="glitch" data-text="..." */
+.glitch {
+  position: relative;
+  text-shadow: 0 0 24px rgba(0, 240, 255, 0.25);
+}
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  opacity: 0;
+}
+.glitch:hover::before {
+  opacity: 0.8;
+  color: #ff2e92;
+  animation: glitch-1 0.4s steps(2, end) infinite;
+  clip-path: inset(0 0 55% 0);
+}
+.glitch:hover::after {
+  opacity: 0.8;
+  color: #00f0ff;
+  animation: glitch-2 0.4s steps(2, end) infinite;
+  clip-path: inset(55% 0 0 0);
+}
+@keyframes glitch-1 {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-3px, -1px); }
+  50% { transform: translate(3px, 1px); }
+  75% { transform: translate(-2px, 1px); }
+  100% { transform: translate(0, 0); }
+}
+@keyframes glitch-2 {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(3px, 1px); }
+  50% { transform: translate(-3px, -1px); }
+  75% { transform: translate(2px, -1px); }
+  100% { transform: translate(0, 0); }
+}
+
+/* Neon glow utility */
+.neon-glow-cyan { box-shadow: 0 0 20px rgba(0, 240, 255, 0.5), 0 0 44px rgba(0, 240, 255, 0.2); }
+.neon-glow-magenta { box-shadow: 0 0 20px rgba(255, 46, 146, 0.4), 0 0 44px rgba(255, 46, 146, 0.15); }
+.neon-text-cyan { text-shadow: 0 0 16px rgba(0, 240, 255, 0.5); }
